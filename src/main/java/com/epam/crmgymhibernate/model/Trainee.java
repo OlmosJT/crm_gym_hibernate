@@ -17,6 +17,6 @@ public class Trainee {
     private Long id;
     @Temporal(TemporalType.DATE)
     private LocalDate dateOfBirth;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private UserEntity user;
 }
