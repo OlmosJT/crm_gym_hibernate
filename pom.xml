@@ -65,6 +65,12 @@
             <artifactId>hypersistence-utils-hibernate-60</artifactId>
             <version>3.6.1</version>
         </dependency>
+        <!--  Password generator util  -->
+        <dependency>
+            <groupId>org.passay</groupId>
+            <artifactId>passay</artifactId>
+            <version>1.6.4</version>
+        </dependency>
         <!--  Lombok  -->
         <dependency>
             <groupId>org.projectlombok</groupId>

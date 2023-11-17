@@ -1,8 +1,6 @@
 package com.epam.crmgymhibernate.repository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.PersistenceContextType;
+import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
@@ -21,9 +19,16 @@ public abstract class AbstractGenericRepository<T> implements GenericRepository<
 
     @Override
     public T getById(long id) {
-        return em.createQuery(
-                "SELECT e FROM " + clazz.getName() + " e WHERE e.id = :id",
-                clazz).setParameter("id", id).getSingleResult();
+        T entity;
+        try {
+            entity = em.createQuery(
+                    "SELECT e FROM " + clazz.getName() + " e WHERE e.id = :id",
+                    clazz).setParameter("id", id).getSingleResult();
+        } catch (NoResultException | NonUniqueResultException exception) {
+            entity = null;
+        }
+
+        return entity;
     }
 
     @Override

@@ -11,19 +11,23 @@ public class Application {
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConf.class, HibernateConf.class);
         GenericRepository<UserEntity> repository =
-                (GenericRepository<UserEntity>) context.getBean("userDao");
+                (GenericRepository<UserEntity>) context.getBean("userRepository");
 
-        repository.insert(new UserEntity(
+        UserEntity userEntity = new UserEntity(
                 null,
-                "Olmos",
-                "Davronov",
-                "olmos.davronv",
-                "tashkent somewhere",
+                "Shohruh",
+                "Maxmanazarov",
+                "shohruh.maxmanazarov",
+                "Uzo tomonlada",
                 "12345pass",
-                false)
+                false
         );
 
-        repository.getAll().forEach(System.out::println);
+//        repository.insert(userEntity);
+//
+//        System.out.println(userEntity);
+
+//        repository.getAll().forEach(System.out::println);
 
     }
 }
