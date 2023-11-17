@@ -1,6 +1,6 @@
 package com.epam.crmgymhibernate.dto.universal;
 
-import com.epam.crmgymhibernate.dto.response.TraineesListResponse;
+import com.epam.crmgymhibernate.dto.response.TraineeListResponse;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public record TrainerProfileDto(
         String lastname,
         List<TrainingTypeDto> specializations,
         boolean isActive,
-        List<TraineesListResponse> traineesList
+        List<TraineeListResponse> traineesList
 ) {
 
 }

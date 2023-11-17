@@ -1,6 +1,6 @@
 package com.epam.crmgymhibernate.dto.response;
 
-public record TraineesListResponse(
+public record TraineeListResponse(
         String username,
         String firstname,
         String lastname

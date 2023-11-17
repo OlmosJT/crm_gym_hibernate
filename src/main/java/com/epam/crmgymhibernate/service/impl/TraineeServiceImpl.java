@@ -1,21 +1,17 @@
 package com.epam.crmgymhibernate.service.impl;
 
 import com.epam.crmgymhibernate.dto.request.UpdateTraineeProfileRequest;
-import com.epam.crmgymhibernate.dto.response.TrainersListResponse;
+import com.epam.crmgymhibernate.dto.response.TrainerListResponse;
 import com.epam.crmgymhibernate.dto.universal.TraineeProfileDto;
 import com.epam.crmgymhibernate.dto.universal.TrainingTypeDto;
 import com.epam.crmgymhibernate.model.Trainee;
-import com.epam.crmgymhibernate.model.UserEntity;
-import com.epam.crmgymhibernate.repository.GenericRepository;
 import com.epam.crmgymhibernate.repository.TraineeRepository;
 import com.epam.crmgymhibernate.repository.UserRepository;
 import com.epam.crmgymhibernate.service.TraineeService;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -76,7 +72,7 @@ public class TraineeServiceImpl implements TraineeService {
                 traineeEntity.getDateOfBirth(),
                 traineeEntity.getUser().getAddress(),
                 traineeEntity.getUser().isActive(),
-                traineeEntity.getTrainers().stream().map(trainer -> new TrainersListResponse(
+                traineeEntity.getTrainers().stream().map(trainer -> new TrainerListResponse(
                         trainer.getUser().getUsername(),
                         trainer.getUser().getFirstName(),
                         trainer.getUser().getLastName(),

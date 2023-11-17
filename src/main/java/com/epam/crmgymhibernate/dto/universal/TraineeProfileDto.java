@@ -1,6 +1,6 @@
 package com.epam.crmgymhibernate.dto.universal;
 
-import com.epam.crmgymhibernate.dto.response.TrainersListResponse;
+import com.epam.crmgymhibernate.dto.response.TrainerListResponse;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,6 +12,6 @@ public record TraineeProfileDto(
         LocalDate dateOfBirth,
         String address,
         boolean isActive,
-        List<TrainersListResponse> trainersList
+        List<TrainerListResponse> trainersList
 ) {
 }
