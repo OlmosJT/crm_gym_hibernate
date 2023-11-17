@@ -1,10 +1,12 @@
 package com.epam.crmgymhibernate.repository.impl;
 
+import com.epam.crmgymhibernate.dto.response.TrainerListResponse;
 import com.epam.crmgymhibernate.model.Trainee;
 import com.epam.crmgymhibernate.model.Trainer;
 import com.epam.crmgymhibernate.repository.AbstractGenericRepository;
 import com.epam.crmgymhibernate.repository.TrainerRepository;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaDelete;
@@ -48,5 +50,15 @@ public class TrainerRepositoryImpl extends AbstractGenericRepository<Trainer> im
     @Override
     public List<Trainer> getActiveNotAssignedTrainers(String username) {
         return null;
+    }
+
+    @Override
+    public List<Trainer> findActiveTrainersNotAssignedToTrainee() {
+        String jpql = "SELECT t FROM Trainer t " +
+                "WHERE t.user.isActive = true " +
+                "AND t.trainees IS EMPTY";
+
+        Query query = em.createQuery(jpql, Trainer.class);
+        return query.getResultList();
     }
 }

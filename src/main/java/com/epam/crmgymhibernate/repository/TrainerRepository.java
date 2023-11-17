@@ -1,6 +1,7 @@
 package com.epam.crmgymhibernate.repository;
 
 
+import com.epam.crmgymhibernate.dto.response.TrainerListResponse;
 import com.epam.crmgymhibernate.model.Trainer;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface TrainerRepository extends GenericRepository<Trainer> {
     Trainer updateTrainer(Trainer trainerEntity);
 
     List<Trainer> getActiveNotAssignedTrainers(String username);
+
+    List<Trainer> findActiveTrainersNotAssignedToTrainee();
 }

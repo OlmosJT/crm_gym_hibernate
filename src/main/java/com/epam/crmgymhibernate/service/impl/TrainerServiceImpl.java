@@ -2,6 +2,7 @@ package com.epam.crmgymhibernate.service.impl;
 
 import com.epam.crmgymhibernate.dto.request.UpdateTrainerProfileRequest;
 import com.epam.crmgymhibernate.dto.response.TraineeListResponse;
+import com.epam.crmgymhibernate.dto.response.TrainerListResponse;
 import com.epam.crmgymhibernate.dto.universal.TrainerProfileDto;
 import com.epam.crmgymhibernate.dto.universal.TrainingTypeDto;
 import com.epam.crmgymhibernate.model.Trainer;
@@ -13,6 +14,8 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -64,8 +67,8 @@ public class TrainerServiceImpl implements TrainerService {
                 .stream().map(t -> new TrainingType(t.id(), t.name())).toList()
         );
 
-        if(!Objects.equals(trainerEntity.getUser().getUsername(), request.username())) {
-            if(!userRepository.existByUsername(request.username())) {
+        if (!Objects.equals(trainerEntity.getUser().getUsername(), request.username())) {
+            if (!userRepository.existByUsername(request.username())) {
                 trainerEntity.getUser().setUsername(request.username());
             }
         }
@@ -73,6 +76,22 @@ public class TrainerServiceImpl implements TrainerService {
         trainerEntity = trainerRepository.updateTrainer(trainerEntity);
 
         return getTrainerProfileDto(trainerEntity);
+    }
+
+    @Override
+    public List<TrainerListResponse> getNotAssignedActiveTrainersToTrainee(String username) {
+        var entities = trainerRepository.findActiveTrainersNotAssignedToTrainee();
+        if (entities == null || entities.isEmpty()) {
+            entities = Collections.emptyList();
+        }
+
+        return entities.stream().map(trainer -> new TrainerListResponse(
+                        trainer.getUser().getUsername(),
+                        trainer.getUser().getFirstName(),
+                        trainer.getUser().getLastName(),
+                        trainer.getSpecializations().stream().map(t -> new TrainingTypeDto(t.getId(), t.getName())).toList()
+                )
+        ).toList();
     }
 
     @Override
