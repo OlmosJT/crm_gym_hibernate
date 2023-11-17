@@ -18,4 +18,9 @@ public class Trainer {
     private List<TrainingType> specializations;
     @OneToOne
     private UserEntity user;
+    @ManyToMany
+    @JoinTable(name = "trainer_trainees",
+            joinColumns = @JoinColumn(name = "trainer_id"),
+            inverseJoinColumns = @JoinColumn(name = "trainee_id"))
+    private List<Trainee> trainees;
 }

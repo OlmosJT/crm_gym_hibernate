@@ -39,4 +39,9 @@ public class TraineeRepositoryImpl extends AbstractGenericRepository<Trainee> im
         int rowsDeleted = em.createQuery(criteriaDelete).executeUpdate();
         System.out.println("rows affected (deleted): " + rowsDeleted);
     }
+
+    @Override
+    public Trainee updateTrainee(Trainee entity) {
+        return em.merge(entity);
+    }
 }

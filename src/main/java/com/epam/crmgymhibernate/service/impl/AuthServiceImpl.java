@@ -10,9 +10,11 @@ import com.epam.crmgymhibernate.model.TrainingType;
 import com.epam.crmgymhibernate.model.UserEntity;
 import com.epam.crmgymhibernate.repository.GenericRepository;
 import com.epam.crmgymhibernate.repository.TraineeRepository;
+import com.epam.crmgymhibernate.repository.UserRepository;
 import com.epam.crmgymhibernate.service.AuthService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +22,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class AuthServiceImpl implements AuthService {
 
 
-    private final GenericRepository<UserEntity> userRepository;
+    private final UserRepository userRepository;
     private final TraineeRepository traineeRepository;
     private final GenericRepository<Trainer> trainerRepository;
     private final GenericRepository<TrainingType> trainingTypeRepository;
 
     @Autowired
-    public AuthServiceImpl(GenericRepository<UserEntity> userRepository, TraineeRepository traineeRepository, GenericRepository<Trainer> trainerRepository, GenericRepository<TrainingType> trainingTypeRepository) {
+    public AuthServiceImpl(UserRepository userRepository, TraineeRepository traineeRepository, GenericRepository<Trainer> trainerRepository, GenericRepository<TrainingType> trainingTypeRepository) {
         this.userRepository = userRepository;
         this.traineeRepository = traineeRepository;
         this.trainerRepository = trainerRepository;

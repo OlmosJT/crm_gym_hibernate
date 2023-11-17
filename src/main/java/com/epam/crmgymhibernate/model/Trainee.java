@@ -19,4 +19,7 @@ public class Trainee {
     private LocalDate dateOfBirth;
     @OneToOne(cascade = CascadeType.ALL)
     private UserEntity user;
+
+    @ManyToMany(mappedBy = "trainees")
+    private List<Trainer> trainers;
 }

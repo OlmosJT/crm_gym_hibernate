@@ -7,7 +7,7 @@ import com.epam.crmgymhibernate.dto.universal.TraineeProfileDto;
 
 public interface TraineeService {
     TraineeProfileDto getTraineeProfile(String username);
-    void updateTraineeProfile(UpdateTraineeProfileRequest request);
+    TraineeProfileDto updateTraineeProfile(UpdateTraineeProfileRequest request);
 
     void deleteTraineeProfile(String username);
 }

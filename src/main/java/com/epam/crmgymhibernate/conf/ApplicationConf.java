@@ -6,6 +6,8 @@ import com.epam.crmgymhibernate.model.TrainingType;
 import com.epam.crmgymhibernate.model.UserEntity;
 import com.epam.crmgymhibernate.repository.GenericRepository;
 import com.epam.crmgymhibernate.repository.TraineeRepository;
+import com.epam.crmgymhibernate.repository.TrainerRepository;
+import com.epam.crmgymhibernate.repository.UserRepository;
 import com.epam.crmgymhibernate.repository.impl.TraineeRepositoryImpl;
 import com.epam.crmgymhibernate.repository.impl.TrainerRepositoryImpl;
 import com.epam.crmgymhibernate.repository.impl.TrainingTypeRepositoryImpl;
@@ -18,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "com.epam.crmgymhibernate")
 public class ApplicationConf {
     @Bean
-    public GenericRepository<UserEntity> userRepository() {
+    public UserRepository userRepository() {
         return new UserRepositoryImpl();
     }
 
@@ -33,7 +35,7 @@ public class ApplicationConf {
     }
 
     @Bean
-    public GenericRepository<Trainer> trainerRepository() {
+    public TrainerRepository trainerRepository() {
         return new TrainerRepositoryImpl();
     }
 }
