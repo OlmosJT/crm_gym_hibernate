@@ -17,7 +17,7 @@ public class Trainee {
     private Long id;
     @Temporal(TemporalType.DATE)
     private LocalDate dateOfBirth;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private UserEntity user;
     @OneToMany(mappedBy = "trainee", cascade = CascadeType.ALL)
     private Set<Training> trainings;

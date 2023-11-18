@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 
-@RunWith(SpringRunner.class)
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ApplicationConf.class, HibernateConf.class})
 @Sql({"classpath:resources/schema.sql", "classpath:resources/data.sql"})

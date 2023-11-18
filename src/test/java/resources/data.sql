@@ -51,3 +51,4 @@ INSERT INTO TRAINER_TRAININGTYPE(TRAINER_ID, SPECIALIZATIONS_ID) VALUES
 -- Matthew Moore with Kickboxing and Powerlifting
 (3, 5), -- Kickboxing
 (3, 6); -- Powerlifting
+
