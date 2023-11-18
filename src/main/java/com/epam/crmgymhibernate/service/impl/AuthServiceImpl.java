@@ -1,5 +1,6 @@
 package com.epam.crmgymhibernate.service.impl;
 
+import com.epam.crmgymhibernate.dto.request.ActivateDeActivateUserRequest;
 import com.epam.crmgymhibernate.dto.request.ChangePasswordRequest;
 import com.epam.crmgymhibernate.dto.request.RegisterTraineeRequest;
 import com.epam.crmgymhibernate.dto.request.RegisterTrainerRequest;
@@ -94,6 +95,17 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    public void activateDeActivateUser(ActivateDeActivateUserRequest request) throws EntityNotFoundException {
+        var resultList = userRepository.findByProperty("username", request.username());
+        if(resultList.isEmpty()) {
+            throw new EntityNotFoundException("User not found with username: " + request.username());
+        } else {
+            UserEntity entity = resultList.get(0);
+            userRepository.update(entity.getId(), "isActive", request.isActive());
+        }
+    }
+
+    @Override
     public void changeUserPassword(ChangePasswordRequest request) throws EntityNotFoundException {
         var resultList = userRepository.findByProperty("username", request.username());
         if(resultList.isEmpty()) {
@@ -101,7 +113,7 @@ public class AuthServiceImpl implements AuthService {
         } else {
             UserEntity entity = resultList.get(0);
             // temporary logic to check password match. Later hash codes need to be checked
-            if(entity.getPassword() == request.oldPassword()) {
+            if(entity.getPassword().equals(request.oldPassword())) {
                 userRepository.update(entity.getId(), "password", request.newPassword());
             }
         }

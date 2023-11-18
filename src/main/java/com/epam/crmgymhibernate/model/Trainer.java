@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -18,9 +19,7 @@ public class Trainer {
     private List<TrainingType> specializations;
     @OneToOne
     private UserEntity user;
-    @ManyToMany
-    @JoinTable(name = "trainer_trainees",
-            joinColumns = @JoinColumn(name = "trainer_id"),
-            inverseJoinColumns = @JoinColumn(name = "trainee_id"))
-    private List<Trainee> trainees;
+
+    @OneToMany(mappedBy = "trainer")
+    private Set<Training> trainings;
 }

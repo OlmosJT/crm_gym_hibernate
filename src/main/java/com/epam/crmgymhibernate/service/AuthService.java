@@ -1,5 +1,6 @@
 package com.epam.crmgymhibernate.service;
 
+import com.epam.crmgymhibernate.dto.request.ActivateDeActivateUserRequest;
 import com.epam.crmgymhibernate.dto.request.ChangePasswordRequest;
 import com.epam.crmgymhibernate.dto.request.RegisterTraineeRequest;
 import com.epam.crmgymhibernate.dto.request.RegisterTrainerRequest;
@@ -14,6 +15,8 @@ import static org.passay.IllegalCharacterRule.ERROR_CODE;
 public interface AuthService {
     RegisterResponse registerTrainee(RegisterTraineeRequest request);
     RegisterResponse registerTrainer(RegisterTrainerRequest request);
+
+    void activateDeActivateUser(ActivateDeActivateUserRequest request);
 
     void changeUserPassword(ChangePasswordRequest request);
 

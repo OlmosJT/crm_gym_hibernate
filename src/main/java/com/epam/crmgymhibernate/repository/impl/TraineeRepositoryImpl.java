@@ -1,14 +1,17 @@
 package com.epam.crmgymhibernate.repository.impl;
 
 import com.epam.crmgymhibernate.model.Trainee;
+import com.epam.crmgymhibernate.model.Trainer;
 import com.epam.crmgymhibernate.repository.AbstractGenericRepository;
 import com.epam.crmgymhibernate.repository.TraineeRepository;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.Root;
 
+import java.util.List;
 import java.util.Optional;
 
 public class TraineeRepositoryImpl extends AbstractGenericRepository<Trainee> implements TraineeRepository {
@@ -29,6 +32,8 @@ public class TraineeRepositoryImpl extends AbstractGenericRepository<Trainee> im
             return Optional.empty();
         }
     }
+
+
 
     @Override
     public void deleteTraineeByUsername(String username) {

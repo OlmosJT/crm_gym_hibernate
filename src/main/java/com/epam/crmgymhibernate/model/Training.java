@@ -3,7 +3,9 @@ package com.epam.crmgymhibernate.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -22,9 +24,8 @@ public class Training {
     private String trainingName;
     @ManyToOne
     private TrainingType trainingType;
-    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    private LocalDate trainingDate;
+    private LocalDateTime trainingDate;
     @Column(nullable = false)
-    private Integer trainingDuration;
+    private Duration trainingDuration;
 }

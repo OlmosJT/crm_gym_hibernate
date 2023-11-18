@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -20,6 +21,6 @@ public class Trainee {
     @OneToOne(cascade = CascadeType.ALL)
     private UserEntity user;
 
-    @ManyToMany(mappedBy = "trainees")
-    private List<Trainer> trainers;
+    @OneToMany(mappedBy = "trainee")
+    private Set<Training> trainings;
 }

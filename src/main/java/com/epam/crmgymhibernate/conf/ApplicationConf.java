@@ -4,14 +4,8 @@ import com.epam.crmgymhibernate.model.Trainee;
 import com.epam.crmgymhibernate.model.Trainer;
 import com.epam.crmgymhibernate.model.TrainingType;
 import com.epam.crmgymhibernate.model.UserEntity;
-import com.epam.crmgymhibernate.repository.GenericRepository;
-import com.epam.crmgymhibernate.repository.TraineeRepository;
-import com.epam.crmgymhibernate.repository.TrainerRepository;
-import com.epam.crmgymhibernate.repository.UserRepository;
-import com.epam.crmgymhibernate.repository.impl.TraineeRepositoryImpl;
-import com.epam.crmgymhibernate.repository.impl.TrainerRepositoryImpl;
-import com.epam.crmgymhibernate.repository.impl.TrainingTypeRepositoryImpl;
-import com.epam.crmgymhibernate.repository.impl.UserRepositoryImpl;
+import com.epam.crmgymhibernate.repository.*;
+import com.epam.crmgymhibernate.repository.impl.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -30,12 +24,17 @@ public class ApplicationConf {
     }
 
     @Bean
-    public GenericRepository<TrainingType> trainingTypeRepository() {
+    public TrainingTypeRepository trainingTypeRepository() {
         return new TrainingTypeRepositoryImpl();
     }
 
     @Bean
     public TrainerRepository trainerRepository() {
         return new TrainerRepositoryImpl();
+    }
+
+    @Bean
+    TrainingRepository trainingRepository() {
+        return new TrainingRepositoryImpl();
     }
 }

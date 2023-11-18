@@ -1,6 +1,5 @@
 package com.epam.crmgymhibernate.repository.impl;
 
-import com.epam.crmgymhibernate.dto.response.TrainerListResponse;
 import com.epam.crmgymhibernate.model.Trainee;
 import com.epam.crmgymhibernate.model.Trainer;
 import com.epam.crmgymhibernate.repository.AbstractGenericRepository;

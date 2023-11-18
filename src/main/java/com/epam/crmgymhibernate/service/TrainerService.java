@@ -10,7 +10,5 @@ public interface TrainerService {
     TrainerProfileDto getTrainerProfile(String username);
     TrainerProfileDto updateTrainerProfile(UpdateTrainerProfileRequest request);
 
-    List<TrainerListResponse> getNotAssignedActiveTrainersToTrainee(String username);
-
     void deleteTrainerProfile(String username);
 }
