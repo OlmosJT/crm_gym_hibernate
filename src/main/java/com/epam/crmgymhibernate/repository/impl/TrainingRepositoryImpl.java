@@ -66,7 +66,7 @@ public class TrainingRepositoryImpl extends AbstractGenericRepository<Training> 
             cq.select(root).where(predicatePeriodFrom);
         }
         if(periodTo != null) {
-            final Predicate predicatePeriodTo = cb.lessThan(root.get("trainingDate"), periodFrom);
+            final Predicate predicatePeriodTo = cb.lessThan(root.get("trainingDate"), periodTo);
             cq.select(root).where(predicatePeriodTo);
         }
 
@@ -74,7 +74,10 @@ public class TrainingRepositoryImpl extends AbstractGenericRepository<Training> 
     }
 
     @Override
-    public List<Training> findTrainingsOfTrainer(String trainerUsername, LocalDateTime periodFrom, LocalDateTime periodTo, String traineeUsername) {
+    public List<Training> findTrainingsOfTrainer(String trainerUsername,
+                                                 LocalDateTime periodFrom,
+                                                 LocalDateTime periodTo,
+                                                 String traineeUsername) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Training> cq = cb.createQuery(Training.class);
         Root<Training> root = cq.from(Training.class);
@@ -89,7 +92,7 @@ public class TrainingRepositoryImpl extends AbstractGenericRepository<Training> 
             cq.select(root).where(predicatePeriodFrom);
         }
         if(periodTo != null) {
-            final Predicate predicatePeriodTo = cb.lessThan(root.get("trainingDate"), periodFrom);
+            final Predicate predicatePeriodTo = cb.lessThan(root.get("trainingDate"), periodTo);
             cq.select(root).where(predicatePeriodTo);
         }
 

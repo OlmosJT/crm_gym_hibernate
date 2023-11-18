@@ -2,6 +2,7 @@ package com.epam.crmgymhibernate.conf;
 
 import com.google.common.base.Preconditions;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
+import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -65,7 +66,7 @@ public class HibernateConf {
         final Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         hibernateProperties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-        hibernateProperties.setProperty("hibernate.physical_naming_strategy", env.getProperty("hibernate.physical_naming_strategy"));
+        hibernateProperties.setProperty("hibernate.physical_naming_strategy", CamelCaseToUnderscoresNamingStrategy.class.getName());
         hibernateProperties.setProperty("hibernate.show_sql", "true");
 
         return hibernateProperties;

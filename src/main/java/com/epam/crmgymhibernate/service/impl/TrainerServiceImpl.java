@@ -69,7 +69,7 @@ public class TrainerServiceImpl implements TrainerService {
         );
 
         if (!Objects.equals(trainerEntity.getUser().getUsername(), request.username())) {
-            if (!userRepository.existByUsername(request.username())) {
+            if (userRepository.existByUsername(request.username())) {
                 trainerEntity.getUser().setUsername(request.username());
             }
         }

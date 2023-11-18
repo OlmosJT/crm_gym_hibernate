@@ -2,7 +2,6 @@ package com.epam.crmgymhibernate.repository.impl;
 
 import com.epam.crmgymhibernate.model.UserEntity;
 import com.epam.crmgymhibernate.repository.AbstractGenericRepository;
-import com.epam.crmgymhibernate.repository.GenericRepository;
 import com.epam.crmgymhibernate.repository.UserRepository;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
@@ -22,9 +21,9 @@ public class UserRepositoryImpl extends AbstractGenericRepository<UserEntity> im
 
         try {
             Long count = query.getSingleResult();
-            return count > 0;
+            return count <= 0;
         } catch (NoResultException e) {
-            return false;
+            return true;
         }
     }
 }
