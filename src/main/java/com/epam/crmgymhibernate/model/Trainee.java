@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,9 +17,8 @@ public class Trainee {
     private Long id;
     @Temporal(TemporalType.DATE)
     private LocalDate dateOfBirth;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private UserEntity user;
-
-    @OneToMany(mappedBy = "trainee")
+    @OneToMany(mappedBy = "trainee", cascade = CascadeType.ALL)
     private Set<Training> trainings;
 }
