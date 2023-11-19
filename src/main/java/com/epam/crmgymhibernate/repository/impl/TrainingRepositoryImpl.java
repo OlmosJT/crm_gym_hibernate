@@ -7,16 +7,19 @@ import com.epam.crmgymhibernate.model.TrainingType;
 import com.epam.crmgymhibernate.repository.AbstractGenericRepository;
 import com.epam.crmgymhibernate.repository.TrainingRepository;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TrainingRepositoryImpl extends AbstractGenericRepository<Training> implements TrainingRepository {
 
+
+    public TrainingRepositoryImpl() {
+        setClazz(Training.class);
+    }
 
     @Override
     public List<Trainee> findTraineesAssignedOnTrainer(String trainerUsername) {
@@ -36,10 +39,24 @@ public class TrainingRepositoryImpl extends AbstractGenericRepository<Training> 
 
     @Override
     public List<Trainer> findActiveTrainersNotAssignedOnTrainee(String traineeUsername) {
-        TypedQuery<Trainer> query = em.createQuery("SELECT t FROM Trainer t " +
-                "LEFT JOIN t.trainings tr " +
-                "WHERE t.user.isActive = true AND tr.trainee IS NULL AND tr.trainee.user.username = :username", Trainer.class);
-        query.setParameter("username", traineeUsername);
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Trainer> cq = cb.createQuery(Trainer.class);
+
+        Subquery<Long> assignedTrainersSubquery = cq.subquery(Long.class);
+        Root<Training> assignedTrainersRoot = assignedTrainersSubquery.from(Training.class);
+        Join<Training, Trainer> assignedTrainersJoin = assignedTrainersRoot.join("trainer", JoinType.INNER);
+        Join<Training, Trainee> traineeJoin = assignedTrainersRoot.join("trainee", JoinType.INNER);
+        assignedTrainersSubquery.select(assignedTrainersJoin.get("id"))
+                .where(cb.equal(traineeJoin.get("user").get("username"), traineeUsername));
+
+        Root<Trainer> trainerRoot = cq.from(Trainer.class);
+        cq.select(trainerRoot)
+                .where(
+                        cb.isTrue(trainerRoot.get("user").get("isActive")),
+                        cb.not(trainerRoot.get("id").in(assignedTrainersSubquery))
+                );
+
+        TypedQuery<Trainer> query = em.createQuery(cq);
         return query.getResultList();
     }
 
@@ -49,26 +66,37 @@ public class TrainingRepositoryImpl extends AbstractGenericRepository<Training> 
                                                  LocalDateTime periodTo,
                                                  String trainerUsername,
                                                  TrainingType trainingType) {
+        if(traineeUsername == null) return Collections.emptyList();
+
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Training> cq = cb.createQuery(Training.class);
         Root<Training> root = cq.from(Training.class);
-        final Predicate predicateUsername = cb.equal(root.get("trainee"), traineeUsername);
-        cq.select(root).where(predicateUsername);
+
+        List<Predicate> predicates = new ArrayList<>();
+        final Predicate predicateUsername = cb.equal(root.get("trainee").get("user").get("username"), traineeUsername);
+        predicates.add(predicateUsername);
 
         if(trainingType != null) {
-            cq.select(root).where(cb.equal(root.get("trainingType"), trainingType));
+            final Predicate predicateTrainingType = cb.equal(root.get("trainingType"), trainingType);
+            predicates.add(predicateTrainingType);
         }
+
         if(trainerUsername != null) {
-            cq.select(root).where(cb.equal(root.get("trainer").get("user").get("username"), trainerUsername));
+            final Predicate predicateTrainerUsername = cb.equal(root.get("trainer").get("user").get("username"), trainerUsername);
+            predicates.add(predicateTrainerUsername);
         }
+
         if(periodFrom != null) {
-            final Predicate predicatePeriodFrom = cb.greaterThan(root.get("trainingDate"), periodFrom);
-            cq.select(root).where(predicatePeriodFrom);
+            Predicate predicatePeriodFrom = cb.greaterThan(root.get("trainingDate"), periodFrom);
+            predicates.add(predicatePeriodFrom);
         }
+
         if(periodTo != null) {
             final Predicate predicatePeriodTo = cb.lessThan(root.get("trainingDate"), periodTo);
-            cq.select(root).where(predicatePeriodTo);
+            predicates.add(predicatePeriodTo);
         }
+
+        cq.select(root).where(predicates.toArray(Predicate[]::new));
 
         return em.createQuery(cq).getResultList();
     }
@@ -78,23 +106,32 @@ public class TrainingRepositoryImpl extends AbstractGenericRepository<Training> 
                                                  LocalDateTime periodFrom,
                                                  LocalDateTime periodTo,
                                                  String traineeUsername) {
+
+        if (trainerUsername == null) return Collections.emptyList();
+
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Training> cq = cb.createQuery(Training.class);
         Root<Training> root = cq.from(Training.class);
-        final Predicate predicateUsername = cb.equal(root.get("trainer"), trainerUsername);
-        cq.select(root).where(predicateUsername);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        final Predicate predicateUsername = cb.equal(root.get("trainer").get("user").get("username"), trainerUsername);
+        predicates.add(predicateUsername);
 
         if(traineeUsername != null) {
-            cq.select(root).where(cb.equal(root.get("trainee").get("user").get("username"), traineeUsername));
+            final Predicate predicateTraineeUsername = cb.equal(root.get("trainee").get("user").get("username"), traineeUsername);
+            predicates.add(predicateTraineeUsername);
         }
         if(periodFrom != null) {
             final Predicate predicatePeriodFrom = cb.greaterThan(root.get("trainingDate"), periodFrom);
-            cq.select(root).where(predicatePeriodFrom);
+            predicates.add(predicatePeriodFrom);
         }
         if(periodTo != null) {
             final Predicate predicatePeriodTo = cb.lessThan(root.get("trainingDate"), periodTo);
-            cq.select(root).where(predicatePeriodTo);
+            predicates.add(predicatePeriodTo);
         }
+
+        cq.select(root).where(predicates.toArray(Predicate[]::new));
 
         return em.createQuery(cq).getResultList();
     }

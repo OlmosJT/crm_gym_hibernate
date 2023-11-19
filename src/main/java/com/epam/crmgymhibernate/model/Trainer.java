@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -20,6 +19,6 @@ public class Trainer {
     @OneToOne
     private UserEntity user;
 
-    @OneToMany(mappedBy = "trainer")
-    private Set<Training> trainings;
+    @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL)
+    private List<Training> trainings; // Usage of Set<> didn't work. I have faced same issue before. WHY?
 }

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -20,5 +20,5 @@ public class Trainee {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private UserEntity user;
     @OneToMany(mappedBy = "trainee", cascade = CascadeType.ALL)
-    private Set<Training> trainings;
+    private List<Training> trainings;
 }

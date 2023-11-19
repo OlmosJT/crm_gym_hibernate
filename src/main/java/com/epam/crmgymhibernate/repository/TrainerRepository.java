@@ -1,10 +1,8 @@
 package com.epam.crmgymhibernate.repository;
 
 
-import com.epam.crmgymhibernate.model.Trainee;
 import com.epam.crmgymhibernate.model.Trainer;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface TrainerRepository extends GenericRepository<Trainer> {
@@ -13,7 +11,4 @@ public interface TrainerRepository extends GenericRepository<Trainer> {
 
     Trainer updateTrainer(Trainer trainerEntity);
 
-    List<Trainer> getActiveNotAssignedTrainers(String username);
-
-    List<Trainer> findActiveTrainersNotAssignedToTrainee();
 }

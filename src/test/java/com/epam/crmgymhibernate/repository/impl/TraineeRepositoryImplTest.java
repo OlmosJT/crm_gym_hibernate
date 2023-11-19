@@ -4,7 +4,7 @@ import com.epam.crmgymhibernate.conf.ApplicationConf;
 import com.epam.crmgymhibernate.conf.HibernateConf;
 import com.epam.crmgymhibernate.model.Trainee;
 import com.epam.crmgymhibernate.repository.TraineeRepository;
-import com.epam.crmgymhibernate.repository.UserRepository;
+import com.epam.crmgymhibernate.repository.TrainingRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,8 +16,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ApplicationConf.class, HibernateConf.class})
 @Sql({"classpath:resources/schema.sql", "classpath:resources/data.sql"})
@@ -25,6 +23,8 @@ class TraineeRepositoryImplTest {
 
     @Autowired
     private TraineeRepository traineeRepository;
+    @Autowired
+    private TrainingRepository trainingRepository;
 
     @Test
     void findTraineeByUsername_success() {
@@ -46,10 +46,12 @@ class TraineeRepositoryImplTest {
 
     @Test
     void deleteTraineeByUsername() {
-//        FIXME: After deleting Trainee, trainings records which are associated with, should be deleted.
-        traineeRepository.deleteTraineeByUsername("bob.johnson");
+        traineeRepository.deleteTraineeByUsername("john.doe");
 
-        Optional<Trainee> trainee = traineeRepository.findTraineeByUsername("bob.johnson");
+        Optional<Trainee> trainee = traineeRepository.findTraineeByUsername("john.doe");
         Assertions.assertFalse(trainee.isPresent());
+
+        var trainings = trainingRepository.getAll();
+        Assertions.assertEquals(12, trainings.size());
     }
 }
