@@ -57,7 +57,7 @@ public class TraineeServiceImpl implements TraineeService {
         }
 
         if(!Objects.equals(traineeEntity.getUser().getUsername(), request.username())) {
-            if(userRepository.existByUsername(request.username())) {
+            if(!userRepository.existByUsername(request.username())) {
                 traineeEntity.getUser().setUsername(request.username());
             }
         }

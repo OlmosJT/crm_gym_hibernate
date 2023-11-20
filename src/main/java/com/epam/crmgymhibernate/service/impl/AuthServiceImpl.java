@@ -9,9 +9,7 @@ import com.epam.crmgymhibernate.model.Trainee;
 import com.epam.crmgymhibernate.model.Trainer;
 import com.epam.crmgymhibernate.model.TrainingType;
 import com.epam.crmgymhibernate.model.UserEntity;
-import com.epam.crmgymhibernate.repository.GenericRepository;
-import com.epam.crmgymhibernate.repository.TraineeRepository;
-import com.epam.crmgymhibernate.repository.UserRepository;
+import com.epam.crmgymhibernate.repository.*;
 import com.epam.crmgymhibernate.service.AuthService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -29,11 +27,11 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final TraineeRepository traineeRepository;
-    private final GenericRepository<Trainer> trainerRepository;
-    private final GenericRepository<TrainingType> trainingTypeRepository;
+    private final TrainerRepository trainerRepository;
+    private final TrainingTypeRepository trainingTypeRepository;
 
     @Autowired
-    public AuthServiceImpl(UserRepository userRepository, TraineeRepository traineeRepository, GenericRepository<Trainer> trainerRepository, GenericRepository<TrainingType> trainingTypeRepository) {
+    public AuthServiceImpl(UserRepository userRepository, TraineeRepository traineeRepository, TrainerRepository trainerRepository, TrainingTypeRepository trainingTypeRepository) {
         this.userRepository = userRepository;
         this.traineeRepository = traineeRepository;
         this.trainerRepository = trainerRepository;
