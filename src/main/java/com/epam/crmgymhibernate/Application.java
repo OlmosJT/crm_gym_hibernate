@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Application {
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConf.class, HibernateConf.class);
         GenericRepository<UserEntity> repository =
                 (GenericRepository<UserEntity>) context.getBean("userRepository");
@@ -23,11 +23,6 @@ public class Application {
                 false
         );
 
-//        repository.insert(userEntity);
-//
-//        System.out.println(userEntity);
 
-//        repository.getAll().forEach(System.out::println);
-
-    }
+    }*/
 }

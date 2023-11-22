@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="CrmGymRESTArchive">
+    <output-path>$PROJECT_DIR$/out/artifacts/CrmGymRESTArchive</output-path>
+    <root id="archive" name="CrmGymRESTArchive.war" />
+  </artifact>
+</component>

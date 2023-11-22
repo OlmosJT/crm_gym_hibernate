@@ -1,11 +1,20 @@
 package com.epam.crmgymhibernate.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public record RegisterTraineeRequest(
+        @NotNull @NotEmpty
         String firstname,
+        @NotNull @NotEmpty
         String lastname,
+        @NotNull @NotEmpty
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
         LocalDate dateOfBirth,
+        @NotNull @NotEmpty
         String address
 ) {
 
