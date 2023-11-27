@@ -1,17 +1,12 @@
 package com.epam.crmgymhibernate.conf;
 
-import com.epam.crmgymhibernate.model.Trainee;
-import com.epam.crmgymhibernate.model.Trainer;
-import com.epam.crmgymhibernate.model.TrainingType;
-import com.epam.crmgymhibernate.model.UserEntity;
 import com.epam.crmgymhibernate.repository.*;
 import com.epam.crmgymhibernate.repository.impl.*;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackages = "com.epam.crmgymhibernate")
+//@ComponentScan(basePackages = "com.epam.crmgymhibernate")
 public class ApplicationConf {
     @Bean
     public UserRepository userRepository() {
